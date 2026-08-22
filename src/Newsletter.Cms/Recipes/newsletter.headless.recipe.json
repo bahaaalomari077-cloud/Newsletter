@@ -1,0 +1,79 @@
+{
+  "name": "Newsletter.Headless",
+  "displayName": "Newsletter Headless Backend",
+  "description": "Newsletter backend: contacts, groups and campaigns with SMTP sending.",
+  "author": "Newsletter",
+  "website": "",
+  "version": "1.0.0",
+  "issetuprecipe": true,
+  "categories": [
+    "headless",
+    "api"
+  ],
+  "tags": [
+    "newsletter",
+    "headless",
+    "api"
+  ],
+  "steps": [
+    {
+      "name": "feature",
+      "disable": [],
+      "enable": [
+        "OrchardCore.HomeRoute",
+        "OrchardCore.Admin",
+        "OrchardCore.Diagnostics",
+        "OrchardCore.DynamicCache",
+        "OrchardCore.Features",
+        "OrchardCore.Navigation",
+        "OrchardCore.Recipes",
+        "OrchardCore.Resources",
+        "OrchardCore.Roles",
+        "OrchardCore.Settings",
+        "OrchardCore.Users",
+        "OrchardCore.Users.ChangeEmail",
+        "OrchardCore.Users.ResetPassword",
+        "OrchardCore.Contents",
+        "OrchardCore.ContentTypes",
+        "OrchardCore.Title",
+        "OrchardCore.Alias",
+        "OrchardCore.ContentFields",
+        "OrchardCore.ContentFields.Indexing.SQL",
+        "OrchardCore.ContentPreview",
+        "OrchardCore.Html",
+        "OrchardCore.Markdown",
+        "OrchardCore.Media",
+        "OrchardCore.Liquid",
+        "OrchardCore.Taxonomies",
+        "OrchardCore.Lists",
+        "OrchardCore.Indexing",
+        "OrchardCore.Apis.GraphQL",
+        "OrchardCore.Deployment",
+        "OrchardCore.Workflows",
+        "OrchardCore.Workflows.Http",
+        "OrchardCore.Email",
+        "OrchardCore.Email.Smtp",
+        "OrchardCore.OpenId",
+        "OrchardCore.OpenId.Management",
+        "OrchardCore.OpenId.Server",
+        "OrchardCore.OpenId.Validation",
+        "OrchardCore.Themes",
+        "TheAdmin",
+        "Newsletter.Admin",
+        "OrchardCore.Flows"
+      ]
+    },
+    {
+      "name": "Themes",
+      "Admin": "TheAdmin"
+    },
+    {
+      "name": "settings",
+      "HomeRoute": {
+        "Action": "Index",
+        "Controller": "Admin",
+        "Area": "OrchardCore.Admin"
+      }
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+@model Newsletter.Admin.Newsletter.CampaignSendViewModel
+
+@*
+    The shape renders inside the editor's own <form>, and HTML forbids nested
+    forms — a <form> here is dropped by the parser and the button ends up
+    submitting the editor instead. So the button posts via fetch and reloads,
+    which keeps sending separate from saving.
+*@
+<div class="card mb-3">
+    <div class="card-header">Send this campaign</div>
+    <div class="card-body">
+        <p class="text-muted">
+            Save your changes first. Sending mails everyone selected above —
+            individually, so no recipient sees the others.
+        </p>
+        <p class="text-muted mb-3">
+            Personalise the subject or message with
+            <code>{{Name}}</code>, <code>{{FirstName}}</code> or
+            <code>{{Email}}</code> — each is replaced with the recipient's own
+            details, so <code>Dear {{FirstName}}</code> becomes
+            <em>Dear Bahaa</em> for one reader and <em>Dear Mohammad</em> for
+            the next.
+        </p>
+        <button type="button"
+                class="btn btn-primary"
+                data-campaign-send="@Url.Content("~/Admin/Campaign/Send")"
+                data-campaign-id="@Model.ContentItemId">
+            Send email
+        </button>
+        <span class="ms-2 text-muted" data-campaign-status></span>
+    </div>
+</div>
+
+<script>
+(function () {
+    var button = document.querySelector('[data-campaign-send]');
+    if (!button) { return; }
+
+    var status = document.querySelector('[data-campaign-status]');
+
+    button.addEventListener('click', function () {
+        if (!confirm('Send this campaign to everyone selected?')) { return; }
+
+        // Reuse the editor's antiforgery token; the endpoint validates it.
+        var token = document.querySelector('input[name="__RequestVerificationToken"]');
+        var body = new URLSearchParams();
+        body.append('contentItemId', button.getAttribute('data-campaign-id'));
+        if (token) { body.append('__RequestVerificationToken', token.value); }
+
+        button.disabled = true;
+        status.className = 'ms-2 text-muted';
+        status.textContent = 'Sending…';
+
+        fetch(button.getAttribute('data-campaign-send'), {
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: body
+        }).then(function (response) {
+            if (!response.ok) { throw new Error('HTTP ' + response.status); }
+            return response.json();
+        }).then(function (result) {
+            button.disabled = false;
+            status.className = result.ok ? 'ms-2 text-success' : 'ms-2 text-danger';
+            status.textContent = result.message;
+        }).catch(function (error) {
+            button.disabled = false;
+            status.className = 'ms-2 text-danger';
+            status.textContent = 'Send failed: ' + error.message;
+        });
+    });
+})();
+</script>

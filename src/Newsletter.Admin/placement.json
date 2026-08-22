@@ -1,0 +1,19 @@
+{
+  "BagPart_Edit": [
+    {
+      "displayType": "Edit",
+      "differentiator": "Sections",
+      "place": "Parts:10#Sections;0"
+    },
+    {
+      "displayType": "Edit",
+      "differentiator": "Items",
+      "place": "Parts:10#Items;0"
+    },
+    {
+      "displayType": "Edit",
+      "differentiator": "SocialLinks",
+      "place": "Parts:11#Social;0"
+    }
+  ]
+}
